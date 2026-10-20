@@ -1,0 +1,13 @@
+Recorded publication-preparation replay: 20 October 2026
+Python: 3.14.7, Clang 21.0.0
+Platform: macOS 27.0.1, arm64
+NumPy: 2.4.2 (pinned in requirements.txt)
+
+Commands, from the repository root:
+python3 -B code/replay.py
+python3 -B -O code/replay.py
+
+Each child interpreter reports its actual optimization mode. The launcher
+requires that it agrees with the parent and that checked inputs are unchanged.
+This environment record describes observed replay, not a claim that every
+supported platform has been tested. See TYPESETTING.md for PDF construction.

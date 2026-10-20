@@ -1,0 +1,14 @@
+{
+  "title": "Order transfer through six for Williamson low-storage Runge–Kutta methods",
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "description": "Research candidate proving order transfer through six for the specified Williamson exponential lift and an all-degree repeated-tail tensor identity. A further sufficient order-seven criterion requires three additional tensor equalities; automatic seventh-order transfer is not proved. Includes manuscript and exact-check source. AI-assisted work; external human peer review and proof-assistant formalisation are not claimed.",
+  "creators": [{"name": "Anonymous"}],
+  "version": "1.0.0-candidate",
+  "doi": "10.5281/zenodo.23501588",
+  "publication_date": "2026-10-20",
+  "license": "cc-zero",
+  "access_right": "open",
+  "keywords": ["Runge–Kutta methods", "geometric integration", "Lie group integrators", "low-storage methods", "order conditions"],
+  "notes": "Original research prose and structured records are CC0-1.0. Original executable code is MIT-licensed. See LICENSES.md for component terms. Maintainer and publisher: Ian Pitchford / Evidence Press."
+}

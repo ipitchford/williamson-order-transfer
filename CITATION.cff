@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "Please cite this versioned research candidate."
+title: "Order transfer through six for Williamson low-storage Runge–Kutta methods"
+type: software
+authors:
+  - name: Anonymous
+version: 1.0.0-candidate
+doi: 10.5281/zenodo.23501588
+date-released: 2026-10-20
+repository-code: "https://github.com/ipitchford/williamson-order-transfer"
+url: "https://github.com/ipitchford/williamson-order-transfer"
+license: CC0-1.0
+abstract: "An all-degree tensor identity and order-transfer theorem through six for finite real Williamson coefficient lists, with a sufficient conditional order-seven criterion. Original executable code is MIT-licensed; see LICENSES.md."

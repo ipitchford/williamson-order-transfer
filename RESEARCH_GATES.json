@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0",
+  "provenance": "Reconstructed 20 October 2026 from the supplied 19 October candidate_optimisation/novelty_report.md and the independent 20 October source-review records. Dated searches below are recorded prior searches, not newly executed queries. This record establishes completeness of recorded research scrutiny, not historical priority.",
+  "contributionMap": [
+    {
+      "claim": "Every finite real Williamson coefficient list satisfying classical order conditions through p <= 6 has the specified exponential lift of consistency order at least p.",
+      "unit": "statement",
+      "paperLocation": "Theorem 6",
+      "searches": [{"date": "2026-10-19", "query": "Williamson order transfer six", "corpus": "Recorded web search of indexed publisher pages, arXiv, public GitHub and exposed Zenodo records"}, {"date": "2026-10-19", "query": "\"2N-storage\" \"transfer\" order four five", "corpus": "Same bounded recorded corpus"}],
+      "closestPriorWork": "Lystad 2026 proves all-stage order three; Bazavov 2022 Section 4.3 conjectures orders three, four and five. Order three is credited, not new.",
+      "verdict": "partially-known-cited"
+    },
+    {
+      "claim": "The repeated-tail contraction t_m(u,v,...,v)=b^T R_v^(m-1)u/m! holds for arbitrary degree and finite real Williamson lists.",
+      "unit": "statement",
+      "paperLocation": "Theorem 3",
+      "searches": [{"date": "2026-10-19", "query": "\"tensor\" \"diag\" \"commutator-free\" storage", "corpus": "Recorded formula and alias search"}, {"date": "2026-10-19", "query": "\"commutator-free\" \"c-reflection\"", "corpus": "Recorded formula and alias search"}],
+      "closestPriorWork": "Bazavov 2025 equations 83–89 use the related reflection operator; Lystad 2026 supplies the third-order moment identity. Neither is claimed new.",
+      "verdict": "new-in-bounded-search"
+    },
+    {
+      "claim": "Division-free row induction, polarised contractions and shuffle relations reduce ordered coefficients to classical moments.",
+      "unit": "method",
+      "paperLocation": "Sections 3–6",
+      "searches": [{"date": "2026-10-19", "query": "Williamson shuffle Runge Kutta", "corpus": "Recorded independent auditor search"}, {"date": "2026-10-19", "query": "low-storage Rota-Baxter", "corpus": "Recorded formula and method search"}, {"date": "2026-10-19", "query": "\"low-storage\" \"Lie-Butcher\"", "corpus": "Recorded method-alias search"}],
+      "closestPriorWork": "Owren 2006 supplies chronological tensors and ordered-flow conditions; Bazavov supplies related row/reflection structure. Polarisation and shuffle algebra are established tools; their present Williamson contraction application is the contribution.",
+      "verdict": "partially-known-cited"
+    },
+    {
+      "claim": "Finite tensor uniqueness and a continuous integration realization prove the bounded order-transfer implication.",
+      "unit": "proof",
+      "paperLocation": "Lemma 5 and Theorem 6 proof",
+      "searches": [{"date": "2026-10-19", "query": "commutator-free sixth order Williamson proof", "corpus": "Recorded independent auditor search"}, {"date": "2026-10-19", "query": "\"low-storage\" \"arborification\"", "corpus": "Recorded method-alias search"}],
+      "closestPriorWork": "Owren 2006 Theorem 2.5 and Corollary 2.6 provide the ordered expansion and universal sufficiency framework.",
+      "verdict": "new-in-bounded-search"
+    },
+    {
+      "claim": "Three specified scalar tensor tests, together with classical order seven, suffice for seventh-order transfer.",
+      "unit": "statement",
+      "paperLocation": "Theorem 7",
+      "searches": [{"date": "2026-10-19", "query": "\"Williamson\" \"all orders\" \"Lie\"", "corpus": "Recorded prior search covering broader transfer"}, {"date": "2026-10-19", "query": "\"2N-storage\" \"order six\" Lie", "corpus": "Recorded higher-order transfer search; no dedicated new order-seven priority search asserted"}],
+      "closestPriorWork": "The supplied manuscript identified the aaabb rank defect; publication-stage enumeration also identifies the two aabc families. This conditional criterion is an extension of that reduction, not automatic seventh-order transfer.",
+      "verdict": "new-in-bounded-search",
+      "qualification": "Novelty scope is restricted to the recorded corpus and source comparison; the publication-stage criterion was not subjected to a separately exhaustive priority search."
+    },
+    {
+      "claim": "The rational fourth-order coefficient list and Yan's nonlinear fifth-order example are prior examples, not new constructions.",
+      "unit": "object",
+      "paperLocation": "Sections 1 and 7",
+      "searches": [{"date": "2026-10-19", "query": "\"2N-storage\" \"fourth\" \"proof\"", "corpus": "Recorded source search; Bazavov Table 7 inspected"}],
+      "closestPriorWork": "Bazavov 2025 Table 7 and Section 5.4; Yan 2017 Table II, independently inspected 20 October.",
+      "verdict": "known-cited"
+    }
+  ],
+  "sourcesReadInFull": [
+    {"citation": "Bazavov 2022, DOI 10.1007/s10543-021-00892-x", "usedFor": "Lift recurrence and exact originating conjecture scope", "readWhat": "Full preprint inspected in supplied audit; Section 4.3 and recurrence equations 4.18–4.19 identified", "date": "2026-10-19", "evidenceLocator": "https://arxiv.org/pdf/2007.04225 ; supplied audit, Inspected sources item 1"},
+    {"citation": "Owren 2006, DOI 10.1088/0305-4470/39/19/S15", "usedFor": "Load-bearing ordered-series framework and fourth-order conditions", "readWhat": "Full accessible preprint; Theorem 2.5, Corollary 2.6, equations 24–31; independently revisited by domain and adversarial reviewers on 20 October", "date": "2026-10-20", "evidenceLocator": "https://www.math.ntnu.no/preprint/numerics/2005/N7-2005.pdf"},
+    {"citation": "Bazavov 2025, arXiv:2506.08444", "usedFor": "Reflection antecedent and rational coefficient example", "readWhat": "Preprint including Theorem 3, equations 83–89 and Table 7; domain reviewer additionally inspected Section 5.4", "date": "2026-10-20", "evidenceLocator": "https://arxiv.org/pdf/2506.08444"},
+    {"citation": "Bazavov 2026, DOI 10.1007/s10543-026-01139-3", "usedFor": "Later description of transfer as conjectural", "readWhat": "Introduction and conclusion, including equations 120–123, recorded in supplied source audit and independently reviewed domain report", "date": "2026-10-20", "evidenceLocator": "https://link.springer.com/article/10.1007/s10543-026-01139-3"},
+    {"citation": "Lystad 2026, all-stage order-three transfer, version 1.0.1", "usedFor": "Prior theorem and exclusion of higher-order priority claims", "readWhat": "Public manuscript source, theorem and statement audit; no independent rerun of its Lean bundle claimed", "date": "2026-10-20", "evidenceLocator": "https://github.com/arex1337/williamson-order-three/blob/main/paper/order-three-transfer.tex ; https://github.com/arex1337/williamson-order-three/blob/main/STATEMENT-AUDIT.md"},
+    {"citation": "Yan 2017, DOI 10.1063/1674-0068/30/cjcp1703025", "usedFor": "Established nonlinear fifth-order coefficient example", "readWhat": "Primary text, especially Table II; domain reviewer distinguishes nonlinear order five from autonomous linear order eight", "date": "2026-10-20", "evidenceLocator": "https://cjcp.ustc.edu.cn/hxwlxb/en/article/pdf/preview/10.1063/1674-0068/30/cjcp1703025.pdf"}
+  ],
+  "limitationTriage": [
+    {"limitation": "The original reduction stopped at the first weight-seven deficient family.", "closingQuestion": "Can all weight-seven families be enumerated and the remaining tests made explicit?", "triedOrSearched": "Complete finite enumeration and independent domain audit identify aaabb plus two aabc families; manuscript Theorem 7 states the three-test criterion.", "estimatedCost": "Completed bounded exact computation and analytic argument", "cheap": true, "decision": "CLOSED", "reasonOpen": "", "whyNotClosedNow": ""},
+    {"limitation": "Automatic seventh-order or unrestricted-order transfer remains unproved.", "closingQuestion": "Do classical conditions force the three actual Williamson tensor defects to vanish?", "triedOrSearched": "Full weight-seven determining-system enumeration supplies three residual directions, not their attainability or vanishing on genuine lists.", "estimatedCost": "Unknown research effort; no established bounded elimination", "cheap": false, "decision": "OPEN", "reasonOpen": "An additional Williamson-specific identity or a genuine coefficient counterexample is required.", "whyNotClosedNow": "Finite rank analysis alone cannot establish the missing implication."},
+    {"limitation": "No prescribed-stage coefficient existence theorem, especially at sixth or seventh order.", "closingQuestion": "Does a verified primary coefficient construction settle existence?", "triedOrSearched": "Domain source check found Yan's nonlinear fifth-order list via Bazavov Section 5.4; no sixth-order nonlinear example identified in that bounded check.", "estimatedCost": "Unknown coefficient-construction research", "cheap": false, "decision": "OPEN", "reasonOpen": "The theorem is conditional on classical order and does not require a new coefficient construction.", "whyNotClosedNow": "Do not replace a missing construction by rounded or conjectural coefficients."},
+    {"limitation": "No performance, stability-range or optimal error-constant claim.", "closingQuestion": "Would a benchmark establish a general practical advantage?", "triedOrSearched": "Perspective and domain reviews distinguish removal of order constraints from method optimisation; no performance study claimed.", "estimatedCost": "Separate multi-method and problem-family study", "cheap": false, "decision": "OPEN", "reasonOpen": "These properties depend on particular coefficient lists and exponential implementations.", "whyNotClosedNow": "They are outside the mathematical implication and cannot be inferred from order transfer."},
+    {"limitation": "Exact exponentials versus numerical exponential approximations.", "closingQuestion": "Can a bounded perturbation argument state when implementation errors preserve order?", "triedOrSearched": "Added uniform O(h^(p+1)) one-step perturbation consequence under the stated Lipschitz and finite-interval assumptions.", "estimatedCost": "Completed short analytic estimate", "cheap": true, "decision": "CLOSED", "reasonOpen": "", "whyNotClosedNow": ""},
+    {"limitation": "No exhaustive historical priority, external human peer review or proof-assistant formalisation.", "closingQuestion": "Can the present records establish any of these stronger assurance claims?", "triedOrSearched": "Bounded source searches and independent AI reviews recorded; rational checker replay is distinguished from proof-assistant verification.", "estimatedCost": "Unbounded literature coverage or separate external/formal review project", "cheap": false, "decision": "OPEN", "reasonOpen": "The available work does not establish these stronger claims.", "whyNotClosedNow": "They remain explicitly disclaimed rather than inferred from replay."},
+    {"limitation": "Coefficient hypotheses and analytic regularity are required; arbitrary classical tableaux and special-equation necessity are not covered.", "closingQuestion": "Can exposition prevent accidental generalisation beyond the recurrence and universal-series setting?", "triedOrSearched": "Added explicit solver contract, universal sufficiency wording, analytic local-to-global assumptions and nonautonomous extended-state explanation.", "estimatedCost": "Completed bounded editorial and analytic clarification", "cheap": true, "decision": "CLOSED", "reasonOpen": "", "whyNotClosedNow": ""},
+    {"limitation": "Original assertion-based verifier could accept corrupt input under Python optimisation.", "closingQuestion": "Can unconditional validation and negative fixtures close the assurance defect?", "triedOrSearched": "Acceptance checks hardened; normal and actual optimised-child replay and semantic corruption controls retained in exact-version execution evidence.", "estimatedCost": "Completed bounded code repair and replay", "cheap": true, "decision": "CLOSED", "reasonOpen": "", "whyNotClosedNow": ""}
+  ],
+  "extensionScout": {
+    "by": "Independent editorial, domain, methodology, perspective and adversarial AI reviewers; publication-stage mathematical development",
+    "date": "2026-10-20",
+    "proposals": ["Enumerate every weight-seven unresolved family rather than stopping at aaabb.", "Seek a sufficient finite seventh-order criterion without claiming automatic transfer.", "Clarify inexact-update convergence and implementation scope.", "Avoid treating additional random checks or weak benchmarks as increased mathematical significance."],
+    "actions": ["Completed all-family enumeration and three-test Theorem 7, with independent domain audit.", "Preserved automatic seventh-order transfer, independence and coefficient existence as unresolved.", "Added conditional uniform-step perturbation argument and operational qualifications.", "Retained exact replay as assurance evidence, not a substitute for substantive contribution."]
+  }
+}

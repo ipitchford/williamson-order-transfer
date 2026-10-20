@@ -1,0 +1,946 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  11pt,
+  a4paper,
+]{scrartcl}
+\usepackage{xcolor}
+\usepackage[top=23mm,bottom=23mm,left=24mm,right=24mm]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{setspace}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{needspace}
+\definecolor{linkink}{HTML}{553653}
+\AtBeginDocument{\hypersetup{colorlinks=true,linkcolor=linkink,urlcolor=linkink,citecolor=linkink}}
+\setlength{\emergencystretch}{3em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.42em}
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+\allowdisplaybreaks[1]
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Order transfer through six for Williamson low-storage Runge--Kutta methods},
+  pdfauthor={Anonymous},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Order transfer through six for Williamson low-storage
+Runge--Kutta methods}
+\author{Anonymous}
+\date{20 October 2026}
+
+\begin{document}
+\maketitle
+
+\setstretch{1.04}
+\section{Abstract}\label{abstract}
+
+Bazavov conjectured that replacing the additive updates in a Williamson
+low-storage Runge--Kutta method by exponential updates preserves its
+classical order for orders three, four and five. We prove this statement
+for every finite stage count and extend it through order six. The proof
+rests on an all-degree identity which expresses certain chronological
+products using only classical tableau data. If \(A,b\) are the
+associated classical coefficients, then for arbitrary vectors \(u,v\)
+and every \(m\geq1\), \[
+ t_m(u,v,\ldots,v)=\frac1{m!}b^TR_v^{m-1}u,\qquad
+ R_v=(b^Tv)I-\operatorname{diag}(Av)+\operatorname{diag}(v)A.
+\] A division-free row induction proves the identity, including
+degenerate coefficient lists. Its polarisation and the shuffle
+identities determine every required ordered tensor through total weight
+six. An integration homomorphism then shows that the classical order
+conditions force the exact ordered-flow coefficients. A fourth-order
+proof in conventional tableau notation gives an elementary entry point.
+Exact symbolic reduction checks all 197 ordered-tree coefficients
+through degree six. At weight seven the determining equations have three
+residual directions. Three explicit additional scalar tests suffice for
+seventh-order transfer, but their automatic satisfaction remains
+unproved. No unrestricted-order claim is made.
+
+\section{1. Problem and contribution}\label{problem-and-contribution}
+
+Many differential equations evolve within a constrained set of matrices:
+rotations remain orthogonal, for example, and quantum evolution remains
+unitary. An exponential update respects such a group constraint when its
+exponent lies in the corresponding Lie algebra. The difficulty is
+preserving the accuracy of an ordinary Runge--Kutta method after making
+this change. Matrix products do not commute, so merely reusing the same
+coefficients is generally insufficient. This paper identifies a
+structured family for which the additional order conditions follow
+automatically through order six.
+
+Consider a sufficiently smooth matrix equation \[
+Y'(t)=F(Y(t))Y(t).
+\] Here \(F(Y)\) lies in the Lie algebra of the matrix group under
+consideration. A natural geometric method updates \(Y\) by
+multiplication by exponentials. Its matrix products do not commute, so
+classical Runge--Kutta order conditions generally require additional
+conditions to imply the same order on the group (Owren, 2006).
+
+Williamson's two-register formulation is \[
+K_i=U_iK_{i-1}+h f(y_{i-1}),\qquad y_i=y_{i-1}+V_iK_i,\quad 1\leq i\leq s,
+\] with \(K_0=0\). Bazavov's corresponding lift is \[
+Z_i=U_iZ_{i-1}+hF(Y_{i-1}),\qquad
+Y_i=\exp(V_iZ_i)Y_{i-1},\quad Z_0=0.
+\tag{1}
+\] The left-multiplication convention in (1) is fixed throughout. The
+last exponential appears on the left of the product, while the
+chronological order used in the pullback tensors runs from early rows to
+late rows.
+
+Bazavov (2022, Section 4.3) conjectured order transfer for the
+higher-stage third-order and the fourth- and fifth-order methods.
+Bazavov (2026) still described the general claim as conjectural. Lystad
+(2026) proved the all-stage third-order case. We establish the
+explicitly conjectured orders three, four and five for every finite
+stage count, and extend the implication to order six. One tensor
+identity handles every coefficient list, while a small finite uniqueness
+argument accounts for the order boundary. The all-stage third-order
+theorem is prior work and is not claimed as new.
+
+The practical consequence is precise: a developer who already has a
+Williamson tableau of classical order \(p\leq6\) obtains a
+commutator-free Lie-group method of at least that order by applying (1).
+The theorem does not compare error constants, stable step sizes, or
+computational performance between particular methods.
+
+More explicitly, two successive updates give \[
+Y_2=\exp(V_2Z_2)\exp(V_1Z_1)Y_0.
+\] The latest exponential is on the left. The two-register description
+refers to the recurrence, not to all workspace needed to evaluate \(F\)
+or apply an exponential. The theorem concerns exact exponential updates;
+errors from an approximate exponential routine require their own
+control.
+
+The proof has four steps. The low-storage recurrence forces an
+alternating row identity. That identity determines tensors whose
+arguments after the first are repeated. Polarisation and shuffle
+equations recover the remaining orderings through weight six. Finally, a
+continuous integration model identifies these expressions with the
+coefficients of the exact flow. Section 5 first shows the mechanism at
+order four without tree notation.
+
+For use in a solver, the input is a verified classical Williamson
+coefficient list of order \(p\leq6\), and the output is the recurrence
+(1) with consistency order at least \(p\). This removes the need to
+solve additional noncommutative order constraints for that lift.
+Constructing the classical list, selecting its error constants and
+assessing its stability remain separate tasks. Yan (2017) supplies a
+thirteen-stage example of nonlinear order five, although its order for
+autonomous linear systems is eight; Bazavov (2025, Section 5.4)
+identifies its Williamson form. Printed decimal coefficients are not an
+exact algebraic certificate. We supply a rational fourth-order example
+below, but no sixth-order coefficient construction.
+
+\section{2. Coefficients and ordered
+tensors}\label{coefficients-and-ordered-tensors}
+
+Vectors \(e_i^T\) are the coordinate rows of \(\mathbb R^s\). Define
+rows \[
+w_0=0,\quad w_i=U_iw_{i-1}+e_i^T,
+\qquad \gamma_i=V_iw_i,
+\] \[
+a_i=\sum_{j<i}\gamma_j,
+\qquad b^T=\sum_{i=1}^s\gamma_i.
+\tag{2}
+\] The classical Butcher matrix \(A\) has row \(a_i\); it is strictly
+lower triangular. Set \[
+c=A\mathbf1,\quad C=b^T\mathbf1,\quad D=\operatorname{diag}(c),\quad R=CI-D+A.
+\tag{3}
+\] No order or consistency assumption is imposed in this section. In
+particular, \(C\) need not equal one.
+
+For vectors \(u_1,\ldots,u_m\), define the chronological tensor \[
+t_m(u_1,\ldots,u_m)=
+\sum_{1\leq i_1\leq\cdots\leq i_m\leq s}
+\frac{\prod_{r=1}^m(\gamma_{i_r}u_r)}{\prod_{j=1}^s n_j!},
+\tag{4}
+\] where \(n_j\) counts the occurrences of \(j\) among the indices.
+Equation (4) is Owren's tensor (24), with his chronological exponential
+rows \(\beta_j\) equal to \(\gamma_j\). In particular, \[
+t_2(u,v)=\sum_{i<j}(\gamma_i u)(\gamma_jv)
++\frac12\sum_i(\gamma_i u)(\gamma_i v).
+\tag{5}
+\] Let \(T_{2,r}\) denote the same tensor for the prefix
+\(\gamma_1,\ldots,\gamma_{r-1}\). This prefix is precisely the
+exponential representation of stage \(r\).
+
+For two rows the definition becomes \[
+t_2(u,v)=\tfrac12(\gamma_1u)(\gamma_1v)
++(\gamma_1u)(\gamma_2v)
++\tfrac12(\gamma_2u)(\gamma_2v).
+\] The halves come from choosing two factors from one exponential
+series. The mixed term chooses one factor from each row in early-to-late
+order. Reversing chronology replaces that mixed term by
+\((\gamma_2u)(\gamma_1v)\), which need not agree. This chronological
+convention is the pullback convention corresponding to the
+left-multiplication product displayed above.
+
+\section{3. A row identity}\label{a-row-identity}
+
+\textbf{Lemma 1.} For every pair of vectors \(u,v\), every row in (2)
+satisfies \[
+w_i\bigl((Av)\odot u-v\odot(Au)\bigr)
+=(a_iv)(w_iu)-(w_iv)(a_iu),
+\tag{6}
+\] where \(\odot\) denotes componentwise multiplication.
+
+\textbf{Proof.} The claim for \(i=1\) is immediate. Suppose it holds for
+\(i-1\). The prefix changes by \(a_i=a_{i-1}+V_{i-1}w_{i-1}\). Replacing
+\(a_{i-1}\) by \(a_i\) in the alternating expression on the right does
+not change its value, because the two added products cancel. The
+coordinate row \(e_i^T\) satisfies (6), since \((Au)_i=a_iu\) and
+\((Av)_i=a_iv\). Multiply the previous-row identity by \(U_i\), add the
+coordinate-row identity, and use \(w_i=U_iw_{i-1}+e_i^T\). No division
+occurs. \(\square\)
+
+For fixed \(v\), put \[
+C_v=b^Tv,\qquad Q_i=\gamma_iv,\qquad
+ d_i=C_v-a_iv,\qquad d_{s+1}=0,
+\] \[
+R_v=C_vI-\operatorname{diag}(Av)+\operatorname{diag}(v)A.
+\tag{7}
+\] Then \(d_i-d_{i+1}=Q_i\). Multiplying (6) by \(V_i\) gives the row
+identity \[
+\gamma_iR_v=d_i\gamma_i+Q_i\sum_{j<i}\gamma_j.
+\tag{8}
+\] Equivalently, \(\Gamma R_v=K\Gamma\), where \(\Gamma\) has rows
+\(\gamma_i\) and \[
+K_{ij}=\begin{cases}Q_i&j<i,\\d_i&j=i,\\0&j>i.\end{cases}
+\tag{9}
+\] Neither matrix needs to be invertible. Taking \(v=\mathbf1\) recovers
+\(R_v=R\) in (3).
+
+\section{4. An all-degree contraction
+identity}\label{an-all-degree-contraction-identity}
+
+For \(k\geq0\), write \[
+H_k(x,y)=\sum_{r=0}^k x^{k-r}y^r.
+\] Thus \((x-y)H_k(x,y)=x^{k+1}-y^{k+1}\), including when \(x=y\).
+
+\textbf{Lemma 2.} For every integer \(m\geq1\), \[
+(\mathbf1^TK^{m-1})_i=H_{m-1}(d_i,d_{i+1}).
+\tag{10}
+\]
+
+\textbf{Proof.} The case \(m=1\) is immediate. Multiplication by \(K\)
+gives at index \(i\) \[
+d_iH_{m-1}(d_i,d_{i+1})+
+\sum_{j>i}Q_jH_{m-1}(d_j,d_{j+1}).
+\] The sum telescopes to \(d_{i+1}^{m}\), because \(d_{s+1}=0\). Adding
+this term to the first expression gives \(H_m(d_i,d_{i+1})\).
+\(\square\)
+
+\textbf{Theorem 3.} For every pair of real vectors \(u,v\), every finite
+real Williamson coefficient list, and every integer \(m\geq1\), \[
+\boxed{t_m(u,v,\ldots,v)=\frac1{m!}b^TR_v^{m-1}u.}
+\tag{11}
+\]
+
+\textbf{Proof.} In (4), group the terms by the first index \(i\) and its
+number of repetitions \(r\). The remaining arguments are \(v\), so
+summing the later rows gives \[
+t_m(u,v,\ldots,v)
+=\sum_i(\gamma_iu)\sum_{r=1}^m
+\frac{Q_i^{r-1}d_{i+1}^{m-r}}{r!(m-r)!}.
+\tag{12}
+\] The binomial theorem, interpreted as a polynomial identity when
+\(Q_i=0\), identifies the inner sum as \(H_{m-1}(d_i,d_{i+1})/m!\).
+Equations (8) and (10), together with \(b^T=\mathbf1^T\Gamma\), yield \[
+b^TR_v^{m-1}=\mathbf1^TK^{m-1}\Gamma
+=\sum_iH_{m-1}(d_i,d_{i+1})\gamma_i.
+\] Substitute into (12). \(\square\)
+
+The bilinear case is particularly simple: \[
+2t_2(u,v)=(b^Tu)(b^Tv)
++b^T\bigl((Au)\odot v-(Av)\odot u\bigr).
+\tag{13}
+\] For \(m=2,u=c,v=\mathbf1\), the formula recovers Lystad's third-order
+moment identity. Bazavov's c-reflection work contains the related
+operator \(I-D+A\). These are antecedents of the present argument; we do
+not claim novelty for that operator or for the earlier third-order
+result.
+
+\section{5. Fourth-order transfer}\label{fourth-order-transfer}
+
+The eight classical conditions through order four are \[
+\begin{array}{llll}
+b^T\mathbf1=1,&b^Tc=\tfrac12,&b^Tc^2=\tfrac13,&b^TAc=\tfrac16,\\
+b^Tc^3=\tfrac14,&b^T\operatorname{diag}(c)Ac=\tfrac18,
+&b^TAc^2=\tfrac1{12},&b^TA^2c=\tfrac1{24}.
+\end{array}
+\tag{C4}
+\] Powers of vectors in (C4) are componentwise. Owren (2006, equations
+26a, 27a, 28a, 29a and 31a) proves that, after imposing (C4), the
+remaining conditions through order four are \[
+t_2(c,\mathbf1)=\tfrac16,\quad
+ t_3(c,\mathbf1,\mathbf1)=\tfrac1{24},\quad
+ t_2(c^2,\mathbf1)=\tfrac1{12},\quad
+ t_2(Ac,\mathbf1)=\tfrac1{24},\quad
+ \sum_rb_rT_{2,r}(c,\mathbf1)=\tfrac1{24}.
+\tag{L4}
+\] The first is the order-three condition. Its other orientation follows
+from \(t_2(c,\mathbf1)+t_2(\mathbf1,c)=(b^Tc)(b^T\mathbf1)\).
+
+\textbf{Theorem 4.} Every finite-stage Williamson method satisfying (C4)
+has a lift (1) of consistency order at least four.
+
+\textbf{Proof.} Since \(C=1\), apply (11) with \(m=2\) and
+\(u=c,c^2,Ac\). The resulting values are respectively \[
+\frac12(\tfrac12-\tfrac13+\tfrac16)=\tfrac16,
+\quad\frac12(\tfrac13-\tfrac14+\tfrac1{12})=\tfrac1{12},
+\quad\frac12(\tfrac16-\tfrac18+\tfrac1{24})=\tfrac1{24}.
+\] For the third-order tensor, expand \((I-D+A)^2\), keeping the matrix
+order: \[
+6t_3(c,\mathbf1,\mathbf1)
+=b^T\bigl(c-2c^2+2Ac+c^3-D Ac-Ac^2+A^2c\bigr).
+\] Equation (C4) gives \[
+6t_3(c,\mathbf1,\mathbf1)
+=\tfrac12-\tfrac23+\tfrac13+\tfrac14-\tfrac18-\tfrac1{12}+\tfrac1{24}
+=\tfrac14.
+\] Finally apply the \(m=2\) formula separately at every stage prefix.
+Its total mass is \(c_r\), so \[
+2T_{2,r}(c,\mathbf1)=c_r(Ac)_r-(Ac^2)_r+(A^2c)_r.
+\] Weighting with \(b_r\) gives \[
+\sum_rb_rT_{2,r}(c,\mathbf1)
+=\frac12(\tfrac18-\tfrac1{12}+\tfrac1{24})=\tfrac1{24}.
+\] Thus every condition in (L4) holds. Owren's complete order theory
+implies consistency order four. \(\square\)
+
+Under the standard local regularity assumptions for one-step
+convergence, the local defect is \(O(h^5)\) and the global error on a
+fixed finite integration interval is \(O(h^4)\). For nonautonomous
+equations, adjoining time gives the usual autonomous formulation; the
+time component of the lifted constant frame reproduces the classical
+stage nodes.
+
+\section{6. Transfer through order
+six}\label{transfer-through-order-six}
+
+The fourth-order argument illustrates the mechanism without trees. To
+handle orders five and six systematically, we combine Theorem 3 with the
+shuffle relations and the elementary-weight form of the classical order
+conditions.
+
+\subsection{6.1 Classical and ordered
+trees}\label{classical-and-ordered-trees}
+
+Let \(\tau\) be an ordinary, unordered rooted tree. Its number of
+vertices is \(|\tau|\), and its tree factorial is \[
+\gamma(\bullet)=1,\qquad
+\gamma([\tau_1,\ldots,\tau_k])
+=|[\tau_1,\ldots,\tau_k]|\prod_{j=1}^k\gamma(\tau_j).
+\] Its stage elementary vector is \[
+\Phi_\bullet=\mathbf1,\qquad
+\Phi_{[\tau_1,\ldots,\tau_k]}
+=\bigodot_{j=1}^k A\Phi_{\tau_j},
+\] and its output moment is \(M_\tau=b^T\Phi_\tau\). The classical
+order-p conditions are \[
+M_\tau=\frac1{\gamma(\tau)}\qquad (|\tau|\leq p).
+\tag{C}
+\] Every moment has weight \(|\tau|\); weights add when moments
+multiply.
+
+An ordered tree \(t=(t_1,\ldots,t_k)\) retains the order of its
+children. Write \(g(t)\) for its numerical operator-series coefficient;
+its degree is \(|t|-1\), so the one-vertex ordered tree represents the
+identity operator. Owren's expansion gives \[
+g(t)=t_k\bigl(g_{\mathrm{st}}(t_1),\ldots,g_{\mathrm{st}}(t_k)\bigr),
+\tag{O}
+\] where \(g_{\mathrm{st}}(t_j)\) is the vector of coefficients at the
+evaluation-stage prefixes. The exact coefficients satisfy \[
+e(\bullet)=1,\qquad
+e((t_1,\ldots,t_k))
+=\frac{\prod_{j=1}^k e(t_j)}{
+\prod_{j=1}^k\left(\sum_{\ell=1}^j|t_\ell|\right)}.
+\tag{E}
+\] Equation (E) is the iterated-integral form of Owren's exact-flow
+recursion (9). Our output \(g(t)\) is his \(g_{s+1,J}(t)\), and \(e(t)\)
+is his \(\alpha(t)/(|t|-1)!\). Owren's Theorem 2.5 and Corollary 2.6
+imply that matching \(g(t)=e(t)\) for \(|t|\leq p+1\) suffices for
+consistency order \(p\) throughout the stated problem class. Necessity
+is a universal order statement, not a claim about each individual
+equation, where special cancellations can occur.
+
+The two tree conventions serve different purposes:
+
+\Needspace{13\baselineskip}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Object
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Bookkeeping degree
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Meaning
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Ordinary tree \(\tau\) & \(|\tau|\) & Weight of the classical moment
+\(M_\tau\) \\
+Ordered operator tree \(t\) & \(|t|-1\) & Power of the step size in its
+output coefficient \\
+Prefix conversion of an output polynomial of weight \(d\) & \(d+1\) &
+Weight of its stage elementary vectors \\
+\end{longtable}
+}
+
+The singleton ordered tree represents the identity operator, so it has
+degree zero. This accounts for the one-vertex shift; it is not an
+additional order condition.
+
+\subsection{6.2 Which tensors are
+determined?}\label{which-tensors-are-determined}
+
+The tensors (4) satisfy the shuffle identity \[
+t_r(u_1,\ldots,u_r)t_q(v_1,\ldots,v_q)
+=\sum_{\sigma\in\mathrm{Sh}(r,q)}t_{r+q}(\sigma(u_1,\ldots,u_r;v_1,\ldots,v_q)).
+\tag{S}
+\] Repeated words are counted with multiplicity. This follows either by
+partitioning the ordered integration simplex or by multiplying the
+defining products of exponential series.
+
+Polarising Theorem 3 in its repeated vector supplies another relation.
+For a fixed first argument \(u\), it determines the sum of all distinct
+permutations of any prescribed tail multiset. The right side is \(1/m!\)
+times the sum of the corresponding operator products in the linear maps
+\(R_v\), contracted with \(b^T\). We denote this known equation by
+\(P(u)\).
+
+For example, the tail multiset \(\{a,a,b\}\) gives \[
+t_4(u,a,a,b)+t_4(u,a,b,a)+t_4(u,b,a,a)
+=\frac1{24}b^T(R_a^2R_b+R_aR_bR_a+R_bR_a^2)u.
+\] Extracting the coefficient of \(x^2y\) after substituting \(v=xa+yb\)
+gives exactly the three distinct words displayed. Equivalently, mixed
+differentiation introduces a common factor \(2!\), which cancels on the
+two sides. In contrast, repeated interleavings in a shuffle equation
+retain their multiplicity.
+
+\textbf{Lemma 5 (finite tensor determination).} For arguments chosen
+among the ordinary elementary vectors \(\Phi_\tau\), with each argument
+assigned weight \(|\tau|\), the polarised identities \(P(u)\) and the
+shuffle identities determine every tensor of total weight at most six
+from classical moment polynomials.
+
+\textbf{Proof.} Use induction on tensor length. A tensor of length one
+is a classical moment. A tensor with every argument equal follows from
+\(t_m(v,\ldots,v)=(b^Tv)^m/m!\). For a prescribed multiset of arguments,
+regard the tensors for its distinct permutations as unknowns. In each
+shuffle equation, the factors on the right have smaller length and are
+already known. The right side of each \(P(u)\) is a classical moment
+polynomial because \(R_v\) uses only \(A\), \(b^T\), and componentwise
+multiplication.
+
+There is only one ordinary tree of weight one and only one of weight
+two. Consequently the nonconstant multiplicity patterns that can occur
+at total weight at most six are exactly those in the following table.
+Letters denote distinct arguments, independently of their order in the
+alphabet.
+
+\Needspace{22\baselineskip}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2143}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2143}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2857}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Pattern
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Unknown permutations
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+A square set of known equations
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Determinant
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+ab & 2 & P(a), P(b) & 1 \\
+aab & 3 & P(a), P(b), S(a,ab) & 1 \\
+abc & 6 & P(a), P(b), P(c), S(a,bc), S(ab,c), S(ac,b) & −1 \\
+aaab & 4 & P(a), P(b), S(a,aab), S(aa,ab) & 1 \\
+aabb & 6 & P(a), P(b), S(a,abb), S(aab,b), S(a,bab), S(ab,ab) & 2 \\
+aaaab & 5 & P(a), P(b), S(a,aaab), S(aa,aab), S(aaa,ab) & 1 \\
+\end{longtable}
+}
+
+Here S(x,y) means the shuffle equation for the two indicated words. The
+integer coefficient matrices, with columns in lexicographic word order,
+are printed in Appendix A. Each is invertible over the rationals. This
+proves the induction. \(\square\)
+
+The assertion that the right side is a classical moment polynomial can
+be made explicit. If \(\tau=[\tau_1,\ldots,\tau_r]\) and
+\(\sigma=[\sigma_1,\ldots,\sigma_q]\), then \[
+R_{\Phi_\sigma}\Phi_\tau
+=M_\sigma\Phi_\tau
+-\Phi_{[\tau_1,\ldots,\tau_r,\sigma]}
++\Phi_{[\sigma_1,\ldots,\sigma_q,\tau]}.
+\tag{G}
+\] This formula proves closure. Counting the weight of a scalar moment
+plus the weight of its stage tree, each term has weight
+\(|\tau|+|\sigma|\). Applying \(R_{\Phi_\sigma}\) therefore raises stage
+weight by \(|\sigma|\). Repeated applications of (G), followed by
+contraction with \(b^T\), expand every polarised right side into a
+rational polynomial in ordinary moments of the same total weight.
+
+A polynomial in prefix moments is converted into a stage vector by
+replacing each monomial \(M_{\tau_1}\cdots M_{\tau_k}\) with
+\(\Phi_{[\tau_1,\ldots,\tau_k]}\). Indeed, its i-th component is
+\(\prod_j(a_i\Phi_{\tau_j})\), exactly the same monomial at stage i. The
+empty monomial becomes \(\Phi_\bullet=\mathbf1\). Thus (O), Theorem 3
+and Lemma 5 express each ordered coefficient of degree at most six as a
+rational polynomial in the classical moments. The polynomial for
+\(g(t)\) is homogeneous of weight \(|t|-1\); converting it to a stage
+vector gives arguments of weight \(|t|\).
+
+For a concrete example, the ordered tree with two singleton children has
+output coefficient \(t_2(\mathbf1,\mathbf1)=\tfrac12M_\bullet^2\). At
+evaluation stage \(i\), this becomes \(\tfrac12c_i^2\), or
+\(\tfrac12\Phi_{[\bullet,\bullet]}\): output weight two becomes stage
+weight three. Truncating the recurrence after stage \(i-1\) leaves every
+earlier component of an elementary vector unchanged because \(A\) is
+strictly lower triangular. Therefore the prefix substitution is valid at
+every stage, including degenerate coefficient lists.
+
+\subsection{6.3 Why the resulting coefficients are the exact
+ones}\label{why-the-resulting-coefficients-are-the-exact-ones}
+
+We now evaluate those moment polynomials under (C). This evaluation has
+a useful continuous interpretation. Replace the classical operations by
+\[
+(Af)(x)=\int_0^x f(y)\,dy,\qquad
+b^Tf=\int_0^1f(x)\,dx,
+\] and interpret componentwise multiplication as ordinary multiplication
+of functions. The elementary vector then becomes the polynomial \[
+\Phi_\tau(x)=\frac{|\tau|}{\gamma(\tau)}x^{|\tau|-1},
+\] so \(b^T\Phi_\tau=1/\gamma(\tau)\). This is precisely the
+substitution in (C), and it preserves every operation used in the
+reduction.
+
+The continuous ordered tensors are iterated integrals. They satisfy (S)
+and the same repeated-tail formula. To verify the latter directly, write
+\[
+\rho(x)=\int_x^1v(y)\,dy,
+\qquad (R_vu)(x)=\rho(x)u(x)+v(x)\int_0^xu(y)\,dy.
+\] Changing integration order gives, for every nonnegative integer j, \[
+\int_0^1\rho(x)^j(R_vu)(x)\,dx
+=\frac{j+2}{j+1}\int_0^1\rho(x)^{j+1}u(x)\,dx.
+\] Iterating yields \[
+\frac1{m!}\int_0^1R_v^{m-1}u(x)\,dx
+=\frac1{(m-1)!}\int_0^1u(x)\rho(x)^{m-1}\,dx,
+\] which is the iterated integral with first argument u and m−1
+subsequent arguments v. No positivity or monotonicity assumption is
+needed.
+
+\textbf{Theorem 6 (order transfer through six).} Let \(1\leq p\leq6\).
+For every finite stage count and every real Williamson coefficient list
+satisfying the classical order conditions (C), the lift (1) has
+consistency order at least p.~In particular, it resolves the order-3,
+order-4 and order-5 claim explicitly posed in Bazavov's Section 4.3 and
+extends the implication to order six.
+
+\textbf{Proof.} Induct over ordered-tree size in (O). The stage
+coefficient for a child is the prefix version of the classical moment
+polynomial already constructed for that child. A prefix moment evaluates
+continuously to \(x^{|\tau|}/\gamma(\tau)\). Homogeneity therefore makes
+the child stage coefficient \(e(t_j)x^{|t_j|-1}\). Lemma 5 determines
+the root tensor uniquely using repeated-tail and shuffle equations.
+Continuous iterated integrals satisfy those same equations. Hence
+evaluation under (C) gives the corresponding continuous iterated
+integral, whose value is exactly (E). Every needed moment has weight at
+most \(|t|-1\leq p\), so all substitutions are warranted by the assumed
+classical order conditions. Thus \(g(t)=e(t)\) for every
+\(|t|\leq p+1\). Owren's completeness theorem gives consistency order
+p.~\(\square\)
+
+For the analytic convergence consequence, suppose the exact solution and
+all sufficiently small-step numerical trajectories lie in a common
+neighbourhood on a fixed interval \([0,T]\), with bounded derivatives
+through the orders needed for the expansion and local Lipschitz bounds
+there. The smooth one-step map then has a Lipschitz bound \(1+Lh\), and
+the local defect is uniformly \(O(h^{p+1})\). Iterating
+\(e_{n+1}\leq(1+Lh)e_n+Kh^{p+1}\), with exact initial data and
+\(nh\leq T\), gives global error \(O(h^p)\). These analytic assumptions
+are separate from the algebraic order conditions. The same estimate
+permits an inexact step map whose uniform difference from the exact
+lifted step is \(O(h^{p+1})\); it does not cover arbitrary exponential
+approximations. In the nonautonomous case, adjoining an additive time
+coordinate with constant vector field reproduces the classical stage
+times on the extended state space.
+
+\subsection{6.4 A precise boundary at weight
+seven}\label{a-precise-boundary-at-weight-seven}
+
+The tensor multiset \((a,a,a,b,b)\) has ten permutations. The complete
+collection of its polarised repeated-tail and proper shuffle equations
+has rank nine. With a the weight-one argument \(\mathbf1\) and b the
+weight-two argument c, its total weight is seven. Appendix A gives a
+nonzero null vector and a nonzero minor. Our identities therefore leave
+one tensor direction undetermined at the next order. The script reports
+this rank deficiency and stops. It is a boundary of this proof method,
+not a counterexample to seventh-order transfer.
+
+\subsection{6.5 Three explicit tests at order
+seven}\label{three-explicit-tests-at-order-seven}
+
+The missing direction just exhibited is not the only new family at
+weight seven. A full enumeration gives two further deficient families,
+involving the two ordinary vectors of weight three. This leads to a
+conditional extension which makes the next-order problem finite and
+explicit.
+
+\textbf{Theorem 7 (a sufficient order-seven criterion).} Suppose a
+finite real Williamson coefficient list satisfies all classical
+order-seven conditions. If \[
+t_5(\mathbf1,\mathbf1,c,\mathbf1,c)=\frac1{280},\qquad
+t_4(\mathbf1,c,\mathbf1,c^2)=\frac1{84},\qquad
+t_4(\mathbf1,c,\mathbf1,Ac)=\frac1{168},
+\tag{C7+}
+\] then its lift (1) has consistency order at least seven.
+
+\textbf{Proof.} Every child of a degree-seven ordered coefficient has
+degree at most six. Its prefix coefficient is therefore a linear
+combination of ordinary elementary vectors by the preceding reduction.
+The root tensors have total weight seven. Every factor of a proper
+shuffle product has strictly smaller total weight and is already
+determined. The polarised repeated-tail right sides are classical moment
+polynomials of weight seven. After imposing the classical order-seven
+conditions, the difference between the actual tensor values and their
+continuous counterparts consequently lies in the nullspace of the
+corresponding determination matrix.
+
+There are \(1,1,2,4,9,20,48\) ordinary rooted trees of weights one
+through seven. Enumerating multisets of these arguments with total
+weight seven gives the following complete list; families distinguish the
+actual ordinary-tree arguments, whereas patterns retain only
+multiplicities.
+
+\Needspace{30\baselineskip}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrr@{}}
+\toprule\noalign{}
+Pattern & Number of families & Rank / number of words \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+a & 48 & 1/1 \\
+ab & 37 & 2/2 \\
+aab & 13 & 3/3 \\
+abc & 5 & 6/6 \\
+aaab & 5 & 4/4 \\
+aaaab & 2 & 5/5 \\
+aaaaab & 1 & 6/6 \\
+aaaaaaa & 1 & 1/1 \\
+aaabb & 1 & 9/10 \\
+aabc & 2 & 11/12 \\
+\end{longtable}
+}
+
+These counts can be reproduced by listing the partitions of seven and
+assigning ordinary trees to each part. The matrices use exactly the
+first-letter polarisation rows and all proper-shuffle rows defined in
+Lemma 5. The full-rank cases through length five are already covered
+there. For aaaaab, the rows
+\(P(a),P(b),S(a,aaaab),S(aa,aaab),S(aaa,aab),S(aaaa,ab)\) give an
+invertible six-by-six system. Constant-word tensors are determined
+directly.
+
+The aaabb family is \((\mathbf1,\mathbf1,\mathbf1,c,c)\). Its null
+vector is printed in Appendix A and has nonzero aabab coordinate. The
+first condition in (C7+) therefore removes its one free direction. The
+aabc pattern occurs twice, as \((\mathbf1,\mathbf1,c,c^2)\) and
+\((\mathbf1,\mathbf1,c,Ac)\). In lexicographic word order \[
+(aabc,aacb,abac,abca,acab,acba,baac,baca,bcaa,caab,caba,cbaa)
+\] its nullspace is spanned by \[
+(0,0,-1,1,1,-1,1,-1,0,-1,1,0)^T.
+\] Exact elimination of the polarisation and shuffle matrix gives rank
+eleven. The abac coordinate is nonzero, so the remaining two conditions
+remove both free directions. The small matrices and this exhaustive
+family count are independently checkable by
+\texttt{code/order7\_criterion.py}.
+
+The constants follow directly from the continuous model. The iterated
+integral of \(x_i^{w_i-1}\) over \(0<x_1<\cdots<x_m<1\) is \[
+\left[\prod_{j=1}^m(w_1+\cdots+w_j)\right]^{-1}.
+\] Weights \((1,1,2,1,2)\) give \(1/280\), and weights \((1,2,1,3)\)
+give \(1/84\). Since \(Ac=x^2/2\) in that model, the third value is
+\(1/168\). Every root tensor now agrees with its exact continuous value,
+and the ordered-tree sufficiency argument proves the result. \(\square\)
+
+At the level of matching the complete ordered series, the three tests
+are also necessary: the required child-stage coefficients are
+\(\mathbf1,c,c^2/2,Ac\), so the three tensors occur as root
+coefficients, with a factor \(1/2\) in the second case. This is a
+coefficient-level observation, not a necessity assertion for every
+special differential equation. We have not proved that (C7+) follows
+from the classical order-seven conditions, that its three conditions are
+independent on genuine Williamson lists, or that a seventh-order list
+exists. The unconditional transfer theorem remains bounded by six.
+
+\section{7. Exact checks and scope}\label{exact-checks-and-scope}
+
+The exact symbolic certificate records all 197 ordered-tree coefficients
+through degree six, including the degree-zero identity coefficient, as
+polynomials in ordinary moments. Its generator uses rational algebra,
+the polarised form of Theorem 3 and shuffle equations; it uses no
+numerical fitting. The independent checker imports only the Python
+standard library and does not import the generator. It reads the emitted
+formulas and verifies all 87 polarisation equations, 212 shuffle
+equations, 47 nontrivial family ranks, 197 root-recursion substitutions
+and 197 exact-flow values. It also independently enumerates the six
+allowed multiplicity patterns and checks the matrices in Appendix A.
+Thus the certificate can be checked without trusting the solver that
+produced it.
+
+A separate verifier reconstructs the tableau directly from the
+low-storage recurrence. It performs 1,360 exact rational checks of the
+row and tensor identities on 20 coefficient lists, including degenerate
+lists and lists with negative coefficients, with tensor degree up to
+eight. It independently expands the stage exponentials on four arbitrary
+rational coefficient lists and compares all 197 emitted coefficient
+polynomials, giving 788 further exact comparisons. It also checks the
+eight classical and five ordered conditions for the rational five-stage
+fourth-order method in Bazavov (2025, Table 7): \[
+U=(0,-1,-1,-11,\tfrac1{10}),\qquad
+V=(\tfrac12,\tfrac23,-\tfrac12,-\tfrac1{10},\tfrac16).
+\tag{M4}
+\] The direct ordered-tree expansion verifies every coefficient through
+degree four for (M4), with the first defects at degree five. A nonlinear
+noncommuting matrix check uses \[
+F(Y)=X+Y_{12}W,\qquad
+X=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\qquad
+W=\begin{pmatrix}1&1\\0&-1\end{pmatrix},\qquad Y(0)=I.
+\] Direct truncated power-series arithmetic gives the first local-error
+term for (M4) at degree five. Reversing the multiplication convention
+gives a nonzero defect already at degree three, providing a negative
+control. These computations check transcription, orientation and
+concrete consequences; the all-stage theorem rests on the proofs in
+Sections 3--6.
+
+The theorem imposes no positivity, monotone-node, distinct-node, or
+nonzero-coefficient requirement. It therefore covers both the regular
+coefficient parameterisations in the source literature and their
+direct-recurrence degeneracies. It does not assert that all classical
+Runge--Kutta methods admit Williamson storage. The theorem is an
+implication for every coefficient list satisfying the stated classical
+order conditions. It makes no existence claim for a prescribed order and
+stage count. The general repeated-tail tensor identity holds beyond
+order six, but those identities and shuffle equations alone cease to
+determine every required tensor at weight seven.
+
+\section{8. Prior-art boundary}\label{prior-art-boundary}
+
+The search, completed on 19 October 2026, inspected the originating
+conjecture, Owren's complete order conditions, Bazavov's 2025
+c-reflection preprint and 2026 coefficient paper, and Lystad's August
+2026 proof. Exact formulas, the operator \(I-D+A\), low-storage aliases,
+Lie--Butcher terminology, and recent resolution searches were checked.
+The all-stage transfer theorem at orders four, five and six and the
+all-degree repeated-tail contraction identity were not found in that
+bounded corpus. This is evidence about the inspected corpus, not a proof
+of historical priority. The detailed queries and
+contribution-by-contribution decisions appear in
+\texttt{novelty\_report.md}.
+
+\section{9. Conclusion and
+availability}\label{conclusion-and-availability}
+
+The Williamson recurrence turns a restricted family of noncommutative
+tensor products into classical moment data at every degree. Through
+weight six, the remaining products are uniquely determined by
+polarisation and shuffles, proving automatic transfer of the stated
+classical orders. At weight seven the reduction leaves three scalar
+tests. Establishing whether those tests are automatic, or finding a
+genuine violating coefficient list, remains open.
+
+The principal result is the written theorem, not a numerical trend. The
+exact certificate checks transcription and finite algebra; the rational
+and noncommuting examples check conventions and selected consequences.
+None establishes external peer review, formal proof-assistant
+verification, historical priority, or a performance advantage.
+
+\textbf{Data and code availability.} The accompanying versioned
+source-and-evidence package contains this manuscript, the order-six
+certificate, the order-seven finite criterion checker, the independently
+implemented checks and \texttt{AI\_INDEX.md}, which identifies the
+replay entry point and the scope of every claim. The source repository
+is \url{https://github.com/ipitchford/williamson-order-transfer} and the
+versioned archive is \url{https://doi.org/10.5281/zenodo.23501588}. The
+proof above is self-contained apart from the cited order-condition
+framework; no private review is required to interpret it.
+
+\textbf{Authorship and AI use.} The scholarly creator is Anonymous under
+the Evidence Press publication convention. AI agents assisted with
+mathematical development, literature inspection, drafting and internal
+adversarial checks. Evidence Press is the publisher; account ownership
+is not a claim of human research authorship. Internal AI review is not
+external human peer review.
+
+\textbf{Ethics, funding and competing interests.} This is theoretical
+mathematical research without human participants or personal data. No
+external research funding or competing interest was declared in the
+supplied materials. These declarations describe the available record
+rather than asserting an independently audited absence.
+
+\section{Appendix A. Finite integer
+certificates}\label{appendix-a.-finite-integer-certificates}
+
+For each pattern, columns list the distinct words in lexicographic
+order. Rows are the equations listed in Lemma 5, in that order. A row
+\(P(a)\) has coefficient one in every word starting with a and zero
+elsewhere; a row \(S(x,y)\) counts the interleavings of x and y,
+retaining multiplicities.
+
+For ab, use columns \((ab,ba)\): \[
+\begin{pmatrix}1&0\\0&1\end{pmatrix},\qquad \det=1.
+\] For aab, use columns \((aab,aba,baa)\): \[
+\begin{pmatrix}
+1&1&0\\0&0&1\\2&1&0
+\end{pmatrix},\qquad \det=1.
+\] For abc, use columns \((abc,acb,bac,bca,cab,cba)\): \[
+\begin{pmatrix}
+1&1&0&0&0&0\\
+0&0&1&1&0&0\\
+0&0&0&0&1&1\\
+1&0&1&1&0&0\\
+1&1&0&0&1&0\\
+1&1&1&0&0&0
+\end{pmatrix},\qquad \det=-1.
+\] For aaab, use columns \((aaab,aaba,abaa,baaa)\): \[
+\begin{pmatrix}
+1&1&1&0\\0&0&0&1\\3&1&0&0\\3&2&1&0
+\end{pmatrix},\qquad \det=1.
+\] For aabb, use columns \((aabb,abab,abba,baab,baba,bbaa)\): \[
+\begin{pmatrix}
+1&1&1&0&0&0\\
+0&0&0&1&1&1\\
+2&1&1&0&0&0\\
+2&1&0&1&0&0\\
+0&1&0&2&1&0\\
+4&2&0&0&0&0
+\end{pmatrix},\qquad \det=2.
+\] For aaaab, use columns \((aaaab,aaaba,aabaa,abaaa,baaaa)\): \[
+\begin{pmatrix}
+1&1&1&1&0\\0&0&0&0&1\\4&1&0&0&0\\6&3&1&0&0\\4&3&2&1&0
+\end{pmatrix},\qquad \det=1.
+\]
+
+For the weight-seven boundary aaabb, the columns are \[
+(aaabb,aabab,aabba,abaab,ababa,abbaa,baaab,baaba,babaa,bbaaa).
+\] Every polarised-tail and proper-shuffle row annihilates the nonzero
+column vector \[
+(0,1,-1,-3,4,-1,2,-3,1,0)^T.
+\] Conversely, take the nine rows \[
+P(a),P(b),S(a,aabb),S(aa,abb),S(aaab,b),
+S(a,abab),S(aa,bab),S(aab,ab),S(aaba,b).
+\] Deleting the second column gives a nine-by-nine minor of determinant
+one. These facts certify rank exactly nine. They concern the determining
+equations, rather than the attainability of that remaining direction by
+Williamson coefficients.
+
+\section{References}\label{references}
+
+Bazavov, A. (2022). Commutator-free Lie group methods with minimum
+storage requirements and reuse of exponentials. \emph{BIT Numerical
+Mathematics, 62}, 745--771.
+\url{https://doi.org/10.1007/s10543-021-00892-x}
+
+Bazavov, A. (2025). \emph{2N-storage Runge--Kutta methods: c-reflection
+symmetry and factorization of the Butcher tableau} {[}Preprint{]}.
+arXiv. \url{https://arxiv.org/abs/2506.08444}
+
+Bazavov, A. (2026). 2N-storage Runge--Kutta methods: Order conditions,
+general properties and some analytic solutions. \emph{BIT Numerical
+Mathematics, 66}, Article 38.
+\url{https://doi.org/10.1007/s10543-026-01139-3}
+
+Lystad, T. A. (2026). \emph{All-stage order-three transfer for
+Williamson 2N-storage Runge-Kutta methods} (Version 1.0.1)
+{[}Preprint{]}. Zenodo. \url{https://doi.org/10.5281/zenodo.21764741} .
+Archive metadata:
+\url{https://github.com/arex1337/williamson-order-three/blob/main/CITATION.cff}
+. Inspected manuscript source:
+\url{https://github.com/arex1337/williamson-order-three/blob/main/paper/order-three-transfer.tex}
+
+Owren, B. (2006). Order conditions for commutator-free Lie group
+methods. \emph{Journal of Physics A: Mathematical and General, 39},
+5585--5599. \url{https://doi.org/10.1088/0305-4470/39/19/S15} .
+Inspected preprint:
+\url{https://www.math.ntnu.no/preprint/numerics/2005/N7-2005.pdf}
+
+Williamson, J. H. (1980). Low-storage Runge--Kutta schemes.
+\emph{Journal of Computational Physics, 35}(1), 48--56.
+\url{https://doi.org/10.1016/0021-9991(80)90033-9}
+
+Yan, Y.-A. (2017). Low-storage Runge--Kutta method for simulating
+time-dependent quantum dynamics. \emph{Chinese Journal of Chemical
+Physics, 30}(3), 277--286.
+\url{https://doi.org/10.1063/1674-0068/30/cjcp1703025}
+
+\end{document}

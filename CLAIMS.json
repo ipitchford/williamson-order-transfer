@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "release_id": "williamson-order-transfer",
+  "version": "1.0.0-candidate",
+  "status": "research-candidate",
+  "creator": "Anonymous",
+  "claims": [
+    {
+      "id": "WOT-IDENTITY",
+      "statement": "For every finite real Williamson coefficient list, all real vectors u,v and m>=1, t_m(u,v,...,v)=b^T R_v^(m-1)u/m!.",
+      "location": "paper.md Theorem 3",
+      "evidence_class": "analytic-proof-with-finite-exact-checks",
+      "limitations": ["Finite checks do not independently prove the universal quantifiers.", "No proof-assistant formalisation is claimed."]
+    },
+    {
+      "id": "WOT-ORDER6",
+      "statement": "For 1<=p<=6, classical order-p conditions imply consistency order at least p for the specified left-multiplication exponential lift.",
+      "location": "paper.md Theorem 6",
+      "evidence_class": "analytic-proof-with-finite-exact-certificate",
+      "limitations": ["Global convergence has additional regularity hypotheses.", "No prescribed-stage coefficient existence or performance claim."]
+    },
+    {
+      "id": "WOT-ORDER7-CONDITIONAL",
+      "statement": "Classical order seven plus the three additional tensor equalities in Theorem 7 imply consistency order seven.",
+      "location": "paper.md Theorem 7",
+      "evidence_class": "conditional-analytic-proof-with-exact-family-rank-checks",
+      "limitations": ["Automatic satisfaction of the three equalities is not proved.", "Their independence on genuine coefficient lists is not established.", "Not an unrestricted-order theorem."]
+    }
+  ],
+  "external_human_peer_review": "not-claimed",
+  "formal_verification": "not-claimed",
+  "novelty": "bounded-literature-assessment-not-proof-of-priority"
+}
